@@ -1,37 +1,26 @@
 var express = require("express");
 var router = express.Router();
-
+var productHelpers= require("../helpers/product-helpers");
+const userHelpers=require('../helpers/user-helpers');
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  let products = [
-    {
-      name: "Zerodol P",
-      category: "Tablet",
-      description: "Rs.78.00",
-      image:
-        "https://www.practostatic.com/practopedia-images/v3/res-750/zerodol-p-tablet-10-s_f54723ff-3356-4e6d-aa61-f39df92a34dd.JPG",
-    },
-    {
-      name: "Dolo 650",
-      category: "Tablet",
-      description: "Rs.20.00",
-      image: "https://cpimg.tistatic.com/04228300/b/5/Paracetamol-Tablets.jpg",
-    },
-    {
-      name: "Rabesec DSR",
-      category: "Capsule",
-      description: "Rs.152.00",
-      image:
-        "https://images.apollo247.in/pub/media/catalog/product/r/a/rab0058.jpg",
-    },
-    {
-      name: "Zincovit",
-      category: "Capsule",
-      description: "Rs.90.00",
-      image: "https://images.apollo247.in/pub/media/catalog/product/c/_/c.jpg",
-    },
-  ];
-  res.render("index", { products, admin: true });
+  
+  productHelpers.getAllProducts().then((products)=>{
+    console.log(products);
+    res.render('user/view-product',{ admin: false, products });
+  })
 });
-
+router.get('/login',(req,res)=>{
+  res.render('user/login')
+})
+router.get('/signup',(req,res)=>{
+  res.render('user/signup')
+})
+router.post('/signup',async (req,res)=>{
+  const response = await userHelpers.doSignup(req.body);
+  console.log(response);
+})
+router.post('/login',(req,res)=>{
+  userHelpers.doLogin(req.body)
+})
 module.exports = router;

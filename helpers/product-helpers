@@ -1,0 +1,25 @@
+var db = require('../config/connection');
+var collection=require('../config/collections')
+
+module.exports = {
+  addProduct: (product, callback) => {
+    if (product) {
+      db.get().collection('product').insertOne(product).then((data) => {
+    
+          callback(data.ops[0]._id);
+        })
+        .catch((err) => {
+          console.error(err);
+          callback(false);
+        });
+    } else {
+      callback(false);
+    }
+  },
+  getAllProducts: () => {
+    return new Promise(async (resolve, reject) => {
+      let products = await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray();
+      resolve(products);
+    });
+  }
+};
