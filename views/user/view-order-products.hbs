@@ -1,0 +1,28 @@
+<section>
+ <h5 class="font-weight-bold" ,"text-center">Ordered Products List</h5>
+<div class="container mt-5">
+    <div class="row">
+           
+        {{#each products}}
+
+        <div class="col-md-3 p-3">
+            <div class="card" style="'width: 15rem; height:24rem">
+                <img class="card-img-top"
+                src="/product-images/{{this.product._id}}.png"
+                alt="Card image cap"
+                style="height: 12rem;">
+                <div class="card-body">
+            <h5 class="card-title">{{this.product.name}}</h5> 
+            <p class="card-text">Rs.{{this.product.price}}.00</p>
+            <p class="card-text">Quantity:{{this.quantity}}</p> 
+            <p class="card-text">{{this.category}}</p>  
+            </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+</section>
+<script>
+
+</script>
